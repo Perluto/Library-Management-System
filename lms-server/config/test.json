@@ -1,0 +1,7 @@
+{
+  "jwtPrivateKey": "1234",
+  "host": "mysql-14668-0.cloudclusters.net",
+  "db": "library",
+  "user": "perluto",
+  "password": "dochac0104"
+}
