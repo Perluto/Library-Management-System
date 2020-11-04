@@ -1,0 +1,11 @@
+.pagination {
+  background: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+  padding: 2px 2px;
+  border-radius: 2px;
+}
