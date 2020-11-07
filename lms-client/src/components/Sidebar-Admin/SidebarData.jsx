@@ -35,11 +35,5 @@ export const SidebarData = [
     path: "/manage-users",
     icon: () => <i className="fas fa-list-ol"></i>,
     cName: "sidebar-text",
-  },
-  {
-    title: "View Book Request",
-    path: "/view-request-book-data",
-    icon: () => <i className="fas fa-pencil-alt"></i>,
-    cName: "sidebar-text",
-  },
+  }
 ];

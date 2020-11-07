@@ -24,10 +24,4 @@ export const SidebarData = [
     icon: () => <i className="fas fa-list-ol"></i>,
     cName: "sidebar-text",
   },
-  {
-    title: "Submit Book Request",
-    path: "/request-book",
-    icon: () => <i className="fas fa-pencil-alt"></i>,
-    cName: "sidebar-text",
-  },
 ];

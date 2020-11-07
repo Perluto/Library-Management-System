@@ -7,7 +7,7 @@ import "../../../../style/table.css";
 class Table extends Component {
   state = {
     column: this.props.column,
-    books: this.props.books,
+    books: this.props.data,
   };
 
   render() {
@@ -17,7 +17,10 @@ class Table extends Component {
           <div className="table">
             <table>
               <TableHeader column={this.state.column}></TableHeader>
-              <TableBody data={this.state.books}></TableBody>
+              <TableBody
+                column={this.state.column}
+                data={this.state.books}
+              ></TableBody>
             </table>
           </div>
         </div>

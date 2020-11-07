@@ -28,14 +28,45 @@ router.post("/add-book", (req, res) => {
 
 router.get("/list/:page", (req, res) => {
   const pageNum = req.params.page;
-  const query = `SELECT b.id as id, b.name as bookName, c.name as category, a.name as author 
-                FROM book b INNER JOIN author a INNER JOIN category c On b.authorId = a.id AND b.categoryId = c.id
-                LIMIT ${pageSize} OFFSET ${(pageNum - 1) * pageSize}`;
 
-  db.query(query, (err, result) => {
-    if (err) return console.error(err.message);
-    if (!result) result = null;
-    res.send(result);
+  const query1 = `SELECT b.id as id, b.name as bookName, c.name as category, a.name as author 
+                FROM book b INNER JOIN author a INNER JOIN category c On b.authorId = a.id AND b.categoryId = c.id
+                ORDER BY b.id LIMIT ${pageSize} OFFSET ${
+    (pageNum - 1) * pageSize
+  }`;
+
+  const query2 = `SELECT quantity FROM quantity_copy_book 
+                  LIMIT ${pageSize} OFFSET ${(pageNum - 1) * pageSize}`;
+
+  const query3 = `SELECT borrowed FROM quantity_borrowed_book
+                  LIMIT ${pageSize} OFFSET ${(pageNum - 1) * pageSize}`;
+
+  const promise1 = new Promise((resolve, reject) => {
+    db.query(query1, (err, result) => {
+      if (err) reject(err);
+      if (!result) result = null;
+      resolve(result);
+    });
+  });
+
+  const promise2 = new Promise((resolve, reject) => {
+    db.query(query2, (err, result) => {
+      if (err) reject(err);
+      if (!result) result = null;
+      resolve(result);
+    });
+  });
+
+  const promise3 = new Promise((resolve, reject) => {
+    db.query(query3, (err, result) => {
+      if (err) reject(err);
+      if (!result) result = null;
+      resolve(result);
+    });
+  });
+
+  Promise.all([promise1, promise2, promise3]).then((data) => {
+    res.send(data);
   });
 });
 

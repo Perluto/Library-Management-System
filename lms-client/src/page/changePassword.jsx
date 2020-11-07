@@ -1,36 +1,49 @@
-import React from "react";
+import React, { Component } from "react";
 import "../style/form.css";
 import "../style/button.css";
 
-const ChangePassword = () => {
-  return (
-    <React.Fragment>
-      <div className="header">Change Password</div>
-      <div className="wrap">
-        <form action="">
-          <div className="form-group">
-            <label className="label" htmlFor="newPassword">
-              New Password
-            </label>
-            <input id="newPassword" type="text" className="form-control" />
+class ChangePassword extends Component {
+  state = { password: "" };
+  handleClick = () => {
+    console.log(this.state);
+  };
+
+  handleChange = ({ currentTarget: input }) => {
+    let password = { ...this.state };
+    password = input.value;
+    this.setState({ password });
+  };
+  
+  render() {
+    return (
+      <React.Fragment>
+        <div className="header">Change Password</div>
+        <div className="wrap">
+          <div>
+            <div className="form-group">
+              <label className="label" htmlFor="newPassword">
+                New Password
+              </label>
+              <input
+                id="newPassword"
+                type="password"
+                className="form-control"
+                name="password"
+                onChange={this.handleChange}
+              />
+            </div>
+            <button
+              className="btn btn-primary"
+              style={{ marginTop: "1rem" }}
+              onClick={this.handleClick}
+            >
+              Save
+            </button>
           </div>
-          <div className="form-group">
-            <label className="label" htmlFor="confirmNewPassword">
-              Confirm New Password
-            </label>
-            <input
-              id="confirmNewPassword"
-              type="text"
-              className="form-control"
-            />
-          </div>
-          <button className="btn btn-primary" style={{ marginTop: "1rem" }}>
-            Save
-          </button>
-        </form>
-      </div>
-    </React.Fragment>
-  );
-};
+        </div>
+      </React.Fragment>
+    );
+  }
+}
 
 export default ChangePassword;

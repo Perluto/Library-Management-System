@@ -39,6 +39,26 @@
   border-color: #005cbf;
 }
 
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+  outline: none;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.btn-danger:active {
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #bd2130;
+  border-color: #b21f2d;
+}
+
 .link {
   color: #fff;
   text-decoration: none;

@@ -24,7 +24,27 @@ router.get("/change-password", async (req, res) => {
   });
 });
 
-router.post("/add-user", (req, res) => {});
+router.post("/add-user", (req, res) => {
+  const query = `SELECT username, passsword, isAdmin FROM user WHERE username = ${req.body.username}`;
+  db.query(query, async (err, result) => {
+    if (result) return res.status(400).send("User already registered.");
+
+    const query1 = `INSERT INTO user(username, password) VALUES(?,?)`;
+    const user = Object.values(req.body);
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+
+    db.query(query1, (err, result1) => {
+      if (err) return console.error(err);
+      const token = user.generateAuthToken();
+      res
+        .header("x-auth-token", token)
+        .header("access-control-expose-headers", "x-auth-token")
+        .send(user);
+    });
+  });
+});
 
 router.post("/issue-book", (req, res) => {});
 

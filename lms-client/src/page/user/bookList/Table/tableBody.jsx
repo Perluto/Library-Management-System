@@ -1,18 +1,35 @@
 import React from "react";
 
 const TableBody = (props) => {
-  const { data } = { ...props };
+  const { column, data } = { ...props };
   return (
     <tbody>
-      {data.map((item) => {
+      {data[0].map((item, id) => {
         return (
-          <tr key={item.name}>
-            <td className="column1">1</td>
-            <td className="column2">{item.name}</td>
-            <td className="column3">{item.category}</td>
-            <td className="column4">{item.authors}</td>
-            <td className="column5">{item.quantity}</td>
-            <td className="column6">{item.borrowed}</td>
+          <tr>
+            {column.map((col, index) => {
+              if (col.id === "quantity") {
+                return (
+                  <td className={"column" + (index + 1).toString()}>
+                    {data[1][id].quantity}
+                  </td>
+                );
+              }
+
+              if (col.id === "borrowed") {
+                return (
+                  <td className={"column" + (index + 1).toString()}>
+                    {data[2][id].borrowed}
+                  </td>
+                );
+              }
+
+              return (
+                <td className={"column" + (index + 1).toString()}>
+                  {item[col.id]}
+                </td>
+              );
+            })}
           </tr>
         );
       })}
