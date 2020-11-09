@@ -4,8 +4,10 @@ import { Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import SidebarAdmin from "./components/Sidebar-Admin/Sidebar-admin";
+import ProtectedRouted from "./components/protectedRouted.jsx";
 
-import login from "./components/login";
+import Login from "./components/login";
+import Logout from "./components/logout";
 
 //user
 import BookList from "./page/user/bookList/bookList";
@@ -25,52 +27,89 @@ import AllArchiveBooksForAdmin from "./page/admin/allArchiveBooks/allArchiveBook
 import ManageUser from "./page/admin/manageUser/manageUser";
 import AddUser from "./page/admin/manageUser/addUser";
 
+import authService from "./service/authService";
+
 import "./style/App.css";
 import "react-pagination-library/build/css/index.css";
 import "./style/pagination.css";
+import "./style/alert.css";
 
 class App extends Component {
   state = {};
 
-  componentDidMount() {}
+  componentDidMount() {
+    const user = authService.getCurrentUser();
+    this.setState({ user });
+  }
 
   render() {
+    const { user } = this.state;
     return (
       <React.Fragment>
-        <Navbar></Navbar>
-        <SidebarAdmin></SidebarAdmin>
-        <main className="container">
+        {user && (
+          <React.Fragment>
+            <Navbar user={user}></Navbar>
+            {user.isAdmin ? <SidebarAdmin></SidebarAdmin> : <Sidebar></Sidebar>}
+          </React.Fragment>
+        )}
+
+        <main className={user === null ? "container-1" : "container"}>
           <Switch>
-            <Route path="/login" component={login}></Route>
-            <Route path="/book-list-for-user" component={BookList} />
-            <Route
+            <Route path="/login" component={Login}></Route>
+            <Route path="/logout" component={Logout}></Route>
+            <ProtectedRouted
+              path="/book-list-for-user"
+              component={BookList}
+            ></ProtectedRouted>
+            <ProtectedRouted
               path="/manage-issued-book-for-user"
               component={IssuedBooks}
-            ></Route>
-            <Route
+            ></ProtectedRouted>
+            <ProtectedRouted
               path="/manage-return-archives-user"
               component={AllArchiveBooks}
-            ></Route>
-            <Route path="/request-book" component={RequestBook}></Route>
-
-            <Route path="/manage-book" component={ManageBooks}></Route>
-            <Route path="/add-book" component={AddBooks}></Route>
-            <Route path="/issue-book" component={IssueBook}></Route>
-            <Route
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/request-book"
+              component={RequestBook}
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/manage-book"
+              component={ManageBooks}
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/add-book"
+              component={AddBooks}
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/issue-book"
+              component={IssueBook}
+            ></ProtectedRouted>
+            <ProtectedRouted
               path="/manage-issued-books"
               component={AllIssuedBooksForAdmin}
-            ></Route>
-            <Route
+            ></ProtectedRouted>
+            <ProtectedRouted
               path="/manage-return-archive"
               component={AllArchiveBooksForAdmin}
-            ></Route>
-            <Route path="/manage-users" component={ManageUser}></Route>
-            <Route path="/add-user" component={AddUser}></Route>
-
-            <Route path="/profile" component={Profile}></Route>
-            <Route path="/change-password" component={ChangePassword}></Route>
-
-            <Route path="/" component={BookList} />
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/manage-users"
+              component={ManageUser}
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/add-user"
+              component={AddUser}
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/profile"
+              component={Profile}
+            ></ProtectedRouted>
+            <ProtectedRouted
+              path="/change-password"
+              component={ChangePassword}
+            ></ProtectedRouted>
+            <ProtectedRouted path="/" component={BookList}></ProtectedRouted>
           </Switch>
         </main>
       </React.Fragment>

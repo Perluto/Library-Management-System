@@ -3,7 +3,7 @@ import React from "react";
 const AddUser = () => {
   return (
     <React.Fragment>
-      <div className="header">Add Book</div>
+      <div className="header">Add User</div>
       <div className="wrap" style={{ height: "fit-content" }}>
         <form action="" style={{ display: "flex", flexWrap: "wrap" }}>
           <div className="form-group">

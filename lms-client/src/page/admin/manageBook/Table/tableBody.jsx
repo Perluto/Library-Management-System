@@ -6,7 +6,6 @@ function handleClick(id) {
 
 const TableBody = (props) => {
   const { column, data } = { ...props };
-  console.log(data[0]);
 
   return (
     <tbody>

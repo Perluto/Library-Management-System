@@ -4,7 +4,8 @@ import Dropdown from "../components/Dropdown/Dropdown";
 
 import "../style/navbar.css";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const user = props.user;
   const [dropdown, setDropdown] = useState(false);
   const showDropdown = () => {
     setDropdown(!dropdown);
@@ -13,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-logo">
-        User Panel
+        {user.isAdmin ? "Admin Panel" : "User Panel"}
       </Link>
       <ul className="navbar-menu">
         <li className="navbar-item">

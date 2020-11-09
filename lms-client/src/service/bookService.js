@@ -11,22 +11,10 @@ export function getReturnedBookForUser(id, page) {
   return http.get(apiEndpoint + `/user/${id}/returned/${page}`);
 }
 
-export function getIssuedBook(page) {
-  return http.get(apiEndpoint + `/issued/${page}`);
-}
-
-export function getReturnedBook(page) {
-  return http.get(apiEndpoint + `/returned/${page}`);
-}
-
 export function getBookList(page) {
   return http.get(apiEndpoint + `/list/${page}`);
 }
 
 export function getBook(id) {
   return http.get(apiEndpoint + `/${id}`);
-}
-
-export function addBook(book) {
-  return http.get(apiEndpoint + "/add-book", book);
 }

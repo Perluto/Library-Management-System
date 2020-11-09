@@ -10,7 +10,7 @@ export const MenuItems = [
   },
   {
     title: "Logout",
-    path: "./",
+    path: "./logout",
     icon: function () {
       return <i className="fas fa-sign-out-alt"></i>;
     },
