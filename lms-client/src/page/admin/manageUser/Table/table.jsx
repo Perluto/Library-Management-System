@@ -17,7 +17,10 @@ class Table extends Component {
           <div className="table-6">
             <table>
               <TableHeader column={this.state.column}></TableHeader>
-              <TableBody data={this.state.data}></TableBody>
+              <TableBody
+                column={this.state.column}
+                data={this.state.data}
+              ></TableBody>
             </table>
           </div>
         </div>

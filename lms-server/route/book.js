@@ -100,7 +100,7 @@ router.get("/user/:id/issued/:page", (req, res) => {
   const pageNum = req.params.page;
   const query = ` SELECT b.id as bookId, b.name as name, r.rentalDate as issuedDate, r.dueDate as dueDate
                   FROM rental r INNER JOIN inventory i INNER JOIN book b ON r.inventoryId = i.id AND i.bookId = b.id 
-                  WHERE rental.userId = ${userId} AND returnDate IS NULL
+                  WHERE r.userId = ${userId} AND returnDate IS NULL
                   LIMIT ${pageSize} OFFSET ${(pageNum - 1) * pageSize};`;
 
   db.query(query, (err, result) => {
@@ -113,9 +113,9 @@ router.get("/user/:id/issued/:page", (req, res) => {
 router.get("/user/:id/returned/:page", (req, res) => {
   const userId = req.params.id;
   const pageNum = req.params.page;
-  const query = ` SELECT b.id as bookId, b.name as name, r.rentalDate as issuedDate, r.dueDate as dueDate, r.returnDate as returnDate
+  const query = ` SELECT b.id as bookId, b.name as name, r.rentalDate as issuedDate, r.dueDate as dueDate, r.returnDate as returnedDate
                   FROM rental r INNER JOIN inventory i JOIN book b ON r.inventoryId = i.id AND i.bookId = b.id
-                  WHERE rental.userId = ${userId} AND returnDate IS NOT NULL
+                  WHERE r.userId = ${userId} AND returnDate IS NOT NULL
                   LIMIT ${pageSize} OFFSET ${(pageNum - 1) * pageSize};`;
 
   db.query(query, (err, result) => {

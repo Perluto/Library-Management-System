@@ -25,21 +25,45 @@ router.get("/change-password", async (req, res) => {
   });
 });
 
-router.post("/add-user", (req, res) => {
-  const query = `SELECT username, passsword, isAdmin FROM user WHERE username = ${req.body.username}`;
+router.get("/get-user/:page", (req, res) => {
+  const pageNum = req.params.page;
+  const query = `SELECT id, CONCAT(firstname, " ", lastname) as name, email, phone, address
+                  FROM user
+                  WHERE isAdmin = 0
+                  LIMIT ${pageSize} OFFSET ${(pageNum - 1) * pageSize};`;
+
+  db.query(query, (err, result) => {
+    if (err) return console.error(err.message);
+    res.send(result);
+  });
+});
+
+router.post("/add-user", async (req, res) => {
+  /*
+  const query = `SELECT 1 FROM user WHERE username = ${req.body.username}`;
   db.query(query, async (err, result) => {
     if (result) return res.status(400).send("User already registered.");
+  });
+  */
+  const query1 = `INSERT INTO user(username, password, firstname, lastname, email, phone, address ) VALUES(?,?,?,?,?,?,?)`;
+  const user = req.body;
+  const salt = await bcrypt.genSalt(10);
+  user.password = "123456";
+  user.password = await bcrypt.hash(user.password, salt);
 
-    const query1 = `INSERT INTO user(username, password) VALUES(?,?)`;
-    const user = Object.values(req.body);
+  const data = [
+    user.username,
+    user.password,
+    user.firstname,
+    user.lastname,
+    user.email,
+    user.phone,
+    user.address,
+  ];
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-
-    db.query(query1, (err, result) => {
-      if (err) return console.error(err);
-      res.send(user);
-    });
+  db.query(query1, data, (err, result) => {
+    if (err) return console.error(err);
+    res.send("Done");
   });
 });
 

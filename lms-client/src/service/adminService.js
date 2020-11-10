@@ -18,7 +18,7 @@ export function addBook(book) {
 }
 
 export function getUser(page) {
-  return http.get(apiEndpoint + "/add-user/" + page);
+  return http.get(apiEndpoint + `/get-user/${page}`);
 }
 
 export function addUser(user) {

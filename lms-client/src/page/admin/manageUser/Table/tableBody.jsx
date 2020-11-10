@@ -14,7 +14,7 @@ const TableBody = (props) => {
             {column.map((col, index) => {
               if (col.id === "action") {
                 return (
-                  <td className="column6-3">
+                  <td className="column6-6">
                     <button
                       style={{ marginLeft: "1px" }}
                       className="btn btn-danger"

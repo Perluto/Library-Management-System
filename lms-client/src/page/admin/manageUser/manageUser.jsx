@@ -26,22 +26,9 @@ const ManageUser = () => {
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        let result = await getUser(page);
-        result = result.data.map((e) => {
-          let date1 = Date.now();
-          let date2 = new Date(e.dueDate);
-          let status = Math.round((date1 - date2) / (1000 * 60 * 60 * 24));
-          e.status = status < 0 ? "" : status;
-          return e;
-        });
-
-        setData(result);
-
-        setLoading(false);
-      } catch (error) {
-        alert("Failed");
-      }
+      const result = await getUser(page);
+      setData(result.data);
+      setLoading(false);
     };
 
     getData();
@@ -75,7 +62,7 @@ const ManageUser = () => {
           <div className="pagination">
             <Pagination
               currentPage={page}
-              totalPages={10}
+              totalPages={15}
               changeCurrentPage={changeCurrentPage}
               theme="bottom-border"
             />

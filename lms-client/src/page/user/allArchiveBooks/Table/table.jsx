@@ -7,7 +7,7 @@ import "../../../../style/table-2.css";
 class Table extends Component {
   state = {
     column: this.props.column,
-    books: this.props.books,
+    books: this.props.data,
   };
 
   render() {
